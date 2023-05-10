@@ -1,7 +1,7 @@
 
 public class Main {
     public static void main(String[] args) {
-        String login = "MyL_ogin";
+        String login = "MyLogin";
         String password = "MyPassword";
         String confirmPassword = "MyPassword";
 
@@ -15,15 +15,9 @@ static void checkParameters(String login, String password, String confirmPasswor
     try {
         check(login, password,confirmPassword);
     } catch (WrongLoginException e) {
-        System.out.println("Login содержит запрещенные символы");
-    } catch (WrongPasswordSymbolException e) {
-        System.out.println("Password содержит запрещенные символы");
-    } catch (WrongLoginLengthException e) {
-        System.out.println("Длина Login не должна превышать 20 символов");
-    } catch (WrongPasswordLengthException e) {
-        System.out.println("Длина Password не должна превышать 20 символов");
+        System.out.println(e.getMessage());
     } catch (WrongPasswordException e) {
-        System.out.println("Password и ConfirmPassword должны совпадать");
+        System.out.println(e.getMessage());
     } finally {
         System.out.println("Проверка параметров завершена");
     }
@@ -34,25 +28,22 @@ static void checkParameters(String login, String password, String confirmPasswor
 
     static void check(String login, String password, String confirmPassword) throws
             WrongPasswordException,
-            WrongLoginLengthException,
-            WrongPasswordLengthException,
-            WrongLoginException,
-            WrongPasswordSymbolException {
+            WrongLoginException {
 
         if(login.length() > 20) {
-            throw new WrongLoginLengthException();
+            throw new WrongLoginException("Login не должен превышать 20 символов");
         }
         if(password.length() > 20) {
-            throw new WrongPasswordLengthException();
+            throw new WrongPasswordException("Password не должен превышать 20 символов");
         }
         if(!checkWord(login)) {
-            throw new WrongLoginException();
+            throw new WrongLoginException("Login содержит запрещенные символы");
         }
         if(!checkWord(password)) {
-            throw new WrongPasswordSymbolException();
+            throw new WrongPasswordException("Password содержит запрещенные символы");
         }
         if(!password.equals(confirmPassword)) {
-            throw new WrongPasswordException();
+            throw new WrongPasswordException("Password и ConfirmPassword должны совпадать");
         }
     }
 
