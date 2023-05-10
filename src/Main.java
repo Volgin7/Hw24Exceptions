@@ -7,7 +7,6 @@ public class Main {
 
         checkParameters(login, password, confirmPassword);
 
-
     }
 
 static void checkParameters(String login, String password, String confirmPassword) {
